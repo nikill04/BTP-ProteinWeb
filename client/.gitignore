@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.vite/
+.vscode/
+*.log
+.DS_Store
+/public/images/*   # allow images except recommended to explicitly add new images as needed
+# If you want to commit default placeholder backgrounds, remove the above line and add those files.
