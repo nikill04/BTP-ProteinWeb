@@ -6,8 +6,8 @@ import AnimatedBG from '../components/AnimatedBG'
 export default function About() {
   return (
     <div className="min-h-[calc(100vh-80px)] p-10 relative">
-      <AnimatedBG />
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-5xl mx-auto">
+      <AnimatedBG bgUrl={config.PAGE_BACKGROUNDS['/about']} />
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-5xl mx-auto content-on-bg">
         <h1 className="text-4xl font-bold">About the Project</h1>
         <p className="mt-4 text-gray-300">This project implements orientation-aware protein image classification and demonstrates predictions for categories: <strong>{config.DISEASES.join(', ')}</strong>.</p>
 
@@ -20,7 +20,7 @@ export default function About() {
           <div className="card p-6 rounded-2xl">
             <h3 className="font-semibold">Visualization</h3>
             <p className="text-gray-300 mt-2">Replace this placeholder with Mol* or PyMOL interactive embeds later. For the demo, a static placeholder is shown below.</p>
-            <div className="mt-4 w-full h-64 bg-black/10 rounded-lg flex items-center justify-center">3D protein visualization placeholder</div>
+            <div className="mt-4 w-full h-64 bg-black/10 rounded-lg flex items-center justify-center">3D preview placeholder</div>
           </div>
         </section>
 

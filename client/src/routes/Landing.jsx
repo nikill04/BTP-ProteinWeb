@@ -7,8 +7,8 @@ import config from '../config'
 export default function Landing() {
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center">
-      <AnimatedBG />
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-4xl text-center p-10">
+      <AnimatedBG bgUrl={config.PAGE_BACKGROUNDS['/']} />
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-4xl text-center p-10 content-on-bg">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
           Protein Prediction
         </h1>

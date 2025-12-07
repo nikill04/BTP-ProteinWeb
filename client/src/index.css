@@ -11,6 +11,7 @@
   --glass: rgba(255,255,255,0.04);
 }
 
+/* base */
 html,body,#root{height:100%}
 body{
   @apply bg-gradient-to-b from-[#071029] via-[#071a2a] to-[#081226] text-white antialiased;
@@ -24,24 +25,73 @@ body{
   backdrop-filter: blur(6px);
 }
 
-/* Animated dots background */
-.protein-dot-bg{
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(124,58,237,0.06) 0 1px, transparent 1px),
-    radial-gradient(circle at 80% 70%, rgba(59,130,246,0.04) 0 1px, transparent 1px);
-  background-size: 40px 40px, 60px 60px;
+/* Animated page background layer.
+   The component AnimatedBG will render an element using class .page-bg
+   and provide inline CSS background-image via style, so this CSS controls
+   animation, overlay, and filters.
+*/
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  will-change: background-position, transform;
+  /* smooth dark overlay */
+  --overlay-gradient: linear-gradient(180deg, rgba(6,9,20,0.55), rgba(6,9,20,0.65));
 }
 
-/* Preview */
-.preview-img{ width:100%; height:100%; object-fit:contain; }
+/* slow pan animation (shifts background-position slightly) */
+@keyframes bg-pan {
+  0% { background-position: 48% 50%; transform: scale(1.02) }
+  50% { background-position: 52% 50%; transform: scale(1.03) }
+  100% { background-position: 48% 50%; transform: scale(1.02) }
+}
 
-/* Floating blobs animation helpers */
-.blob {
-  filter: blur(36px);
-  opacity: 0.22;
+.page-bg-inner {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  animation: bg-pan 32s linear infinite;
+  filter: saturate(1.05) contrast(1.03);
   transform-origin: center;
 }
 
-/* subtle appear */
+/* overlay to dim and tint the image so foreground content stays readable */
+.page-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3,7,18,0.45), rgba(3,7,18,0.6));
+  mix-blend-mode: normal;
+}
+
+/* subtle vignette for focus */
+.page-bg-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(800px 400px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.25));
+}
+
+/* blob helpers (big soft colorful shapes) */
+.blob {
+  filter: blur(40px);
+  opacity: 0.18;
+  transform-origin: center;
+}
+
+/* ensure content sits above background */
+.content-on-bg {
+  position: relative;
+  z-index: 10;
+}
+
+/* small appear */
 .fade-in{ animation: fadeIn .6s ease both; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none; } }
+
+/* preview */
+.preview-img{ width:100%; height:100%; object-fit:contain; }

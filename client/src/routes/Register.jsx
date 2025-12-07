@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { registerApi, setToken } from '../auth/auth'
 import config from '../config'
+import AnimatedBG from '../components/AnimatedBG'
 
 export default function Register() {
   const [name, setName] = useState('')
@@ -26,8 +27,9 @@ export default function Register() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
-      <div className="card p-8 rounded-3xl w-full max-w-lg">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
+      <AnimatedBG bgUrl={config.PAGE_BACKGROUNDS['/register']} />
+      <div className="card p-8 rounded-3xl w-full max-w-lg content-on-bg">
         <h2 className="text-2xl font-semibold">Create an account</h2>
         <p className="text-sm text-gray-300 mt-1">Register to use the protein classification demo and manage datasets.</p>
 

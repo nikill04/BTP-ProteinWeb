@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import FileUploader from '../components/FileUploader'
 import ProgressBar from '../components/ProgressBar'
 import { uploadApi, classifyApi } from '../auth/auth'
+import AnimatedBG from '../components/AnimatedBG'
+import config from '../config'
 
 export default function Classify() {
   const [file, setFile] = useState(null)
@@ -33,9 +35,7 @@ export default function Classify() {
       setUploaded(up.file)
 
       // 2) ask server to classify based on saved file name
-      // first call /api/classify to get time & probs
       const body = { savedName: up.file.savedName || up.file.originalName }
-      // server returns timeMs & probs, but simulates time internally. For better progress, we'll query & then animate locally for timeMs.
       const res = await classifyApi(body)
       const timeMs = res.timeMs || 2000
       const probs = res.probs || { covid: 0.25, aids: 0.25, ebola: 0.25, dengue: 0.25 }
@@ -65,8 +65,9 @@ export default function Classify() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-80px)] p-10">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto">
+    <div className="min-h-[calc(100vh-80px)] p-10 relative">
+      <AnimatedBG bgUrl={config.PAGE_BACKGROUNDS['/classify']} />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto content-on-bg">
         <h1 className="text-3xl font-bold">Classify Protein Image</h1>
         <p className="text-gray-300 mt-2">Upload a protein image to run the demo classification. Use descriptive filenames to control demo behavior.</p>
 
