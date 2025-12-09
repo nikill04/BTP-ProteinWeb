@@ -13,7 +13,9 @@ export default function Landing() {
           Protein Prediction
         </motion.h1>
         <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-          Predict likely related disease from 3D protein images — demo for BTP.
+          <div>Predict likely related disease from 3D protein images</div>
+          <div>For BTP and GENERAL RESEARCH</div>
+           
         </p>
 
         <div className="mt-10 flex items-center justify-center gap-6">

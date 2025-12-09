@@ -26,7 +26,7 @@ const DISEASES = ['covid', 'aids', 'ebola', 'dengue']
 // Per-page background images (put files in client/public/images/)
 // Example values: '/images/landing.jpg' or full 'https://...'
 const PAGE_BACKGROUNDS = {
-  '/': '/images/landing.jpeg',
+  '/': '/images/landing.jpg',
   '/register': '/images/register.jpeg',
   '/login': '/images/login.jpeg',
   '/about': '/images/about.jpeg',
