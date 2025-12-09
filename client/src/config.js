@@ -5,8 +5,8 @@
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000'
 
 const BRAND = {
-  name: 'ProteinPredict',
-  logoText: 'ProteinPredict',
+  name: 'Protein Web',
+  logoText: 'Protein Web',
   logoEmoji: '🧬'
 }
 
