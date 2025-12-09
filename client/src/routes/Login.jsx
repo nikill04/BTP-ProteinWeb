@@ -17,7 +17,7 @@ export default function Login() {
     try {
       const data = await loginApi({ email, password: pw })
       setToken(data.token)
-      nav(config.ROUTES[4].path)
+      nav(config.ROUTES[3].path)
     } catch (err) {
       alert(err?.response?.data?.error || 'Login failed')
     } finally {
@@ -28,16 +28,16 @@ export default function Login() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
       <AnimatedBG bgUrl={config.PAGE_BACKGROUNDS['/login']} />
-      <div className="card p-8 rounded-3xl w-full max-w-md content-on-bg">
+      <motion.div initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }} className="card p-8 rounded-3xl w-full max-w-md content-on-bg">
         <h2 className="text-2xl font-semibold">Welcome back</h2>
         <p className="text-sm text-gray-300 mt-1">Login to classify protein images</p>
 
         <form onSubmit={handleLogin} className="mt-6 grid gap-4">
           <input value={email} onChange={e => setEmail(e.target.value)} className="p-3 rounded-md bg-transparent border border-white/6" placeholder="Email" />
           <input value={pw} onChange={e => setPw(e.target.value)} className="p-3 rounded-md bg-transparent border border-white/6" type="password" placeholder="Password" />
-          <button disabled={loading} className="mt-4 py-3 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]">{loading ? 'Logging...' : 'Login'}</button>
+          <motion.button disabled={loading} whileTap={{ scale: 0.995 }} className="mt-4 py-3 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]">{loading ? 'Logging...' : 'Login'}</motion.button>
         </form>
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

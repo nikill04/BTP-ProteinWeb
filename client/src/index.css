@@ -2,96 +2,115 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Theme */
+/* Theme variables */
 :root{
-  --bg1: #071029;
-  --bg2: #071a2a;
   --accent: #7c3aed;
   --accent2: #06b6d4;
-  --glass: rgba(255,255,255,0.04);
 }
 
-/* base */
+/* basic layout */
 html,body,#root{height:100%}
 body{
   @apply bg-gradient-to-b from-[#071029] via-[#071a2a] to-[#081226] text-white antialiased;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto;
 }
 
-/* Glass card */
+/* glassy cards */
 .card {
   background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.04);
   backdrop-filter: blur(6px);
 }
 
-/* Animated page background layer.
-   The component AnimatedBG will render an element using class .page-bg
-   and provide inline CSS background-image via style, so this CSS controls
-   animation, overlay, and filters.
-*/
+/* -------- background animation classes -------- */
+/* container for full-page background (fixed) */
 .page-bg {
   position: fixed;
   inset: 0;
   z-index: -20;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  will-change: background-position, transform;
-  /* smooth dark overlay */
-  --overlay-gradient: linear-gradient(180deg, rgba(6,9,20,0.55), rgba(6,9,20,0.65));
+  pointer-events: none;
+  overflow: hidden;
 }
 
-/* slow pan animation (shifts background-position slightly) */
-@keyframes bg-pan {
-  0% { background-position: 48% 50%; transform: scale(1.02) }
-  50% { background-position: 52% 50%; transform: scale(1.03) }
-  100% { background-position: 48% 50%; transform: scale(1.02) }
-}
-
+/* inner image layer that pans/zooms. We set animation-duration inline from AnimatedBG */
 .page-bg-inner {
   position: absolute;
-  inset: 0;
+  inset: -6%; /* slight bleed so zoom doesn't show edges */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  animation: bg-pan 32s linear infinite;
-  filter: saturate(1.05) contrast(1.03);
   transform-origin: center;
+  will-change: transform, background-position;
+  /* default animation (duration replaced inline) */
+  animation-name: bg-pan-zoom;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-/* overlay to dim and tint the image so foreground content stays readable */
+/* smooth dark overlay to keep content readable */
 .page-bg-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(3,7,18,0.45), rgba(3,7,18,0.6));
-  mix-blend-mode: normal;
+  background: linear-gradient(180deg, rgba(3,7,18,0.45), rgba(3,7,18,0.62));
 }
 
-/* subtle vignette for focus */
+/* subtle vignette */
 .page-bg-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(800px 400px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.25));
+  background: radial-gradient(800px 400px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.28));
 }
 
-/* blob helpers (big soft colorful shapes) */
+/* dot pattern overlay */
+.page-bg-dots {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(124,58,237,0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(59,130,246,0.04) 0 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+}
+
+/* keyframes: gentle pan and very slight zoom (keeps subtle) */
+@keyframes bg-pan-zoom {
+  0% {
+    transform: scale(1.02) translate3d(-1.5%, 0%, 0);
+    background-position: 48% 48%;
+  }
+  25% {
+    transform: scale(1.03) translate3d(0%, -0.5%, 0);
+    background-position: 50% 49%;
+  }
+  50% {
+    transform: scale(1.025) translate3d(1.5%, 0.25%, 0);
+    background-position: 52% 52%;
+  }
+  75% {
+    transform: scale(1.03) translate3d(0%, 0.5%, 0);
+    background-position: 50% 51%;
+  }
+  100% {
+    transform: scale(1.02) translate3d(-1.5%, 0%, 0);
+    background-position: 48% 48%;
+  }
+}
+
+/* animated soft blobs */
 .blob {
   filter: blur(40px);
-  opacity: 0.18;
+  opacity: 0.14;
   transform-origin: center;
 }
 
-/* ensure content sits above background */
-.content-on-bg {
-  position: relative;
-  z-index: 10;
-}
+/* make sure content sits above background */
+.content-on-bg { position: relative; z-index: 10; }
 
-/* small appear */
+/* small reveal animation for cards / headings */
 .fade-in{ animation: fadeIn .6s ease both; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none; } }
 
-/* preview */
+/* convenience */
 .preview-img{ width:100%; height:100%; object-fit:contain; }
